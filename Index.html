@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Free Fire API</title>
+</head>
+<body>
+    <h1>Поиск игрока</h1>
+    <input type="text" id="uid" placeholder="Введите UID игрока">
+    <button onclick="getPlayer()">Получить данные</button>
 
+    <div id="result"></div>
+
+    <script>
+        async function getPlayer() {
+            const uid = document.getElementById('uid').value;
+            if (!uid) {
+                alert("Введите UID!");
+                return;
+            }
+
+            try {
+                // Пример API (замени на свой URL)
+                const res = await fetch(`https://example.com/api/freefire/${uid}`);
+                const data = await res.json();
+
+                // Покажем только nickname, accountId, region
+                document.getElementById('result').innerHTML = `
+                    <p><strong>Ник:</strong> ${data.nickname}</p>
+                    <p><strong>Account ID:</strong> ${data.accountId}</p>
+                    <p><strong>Регион:</strong> ${data.region}</p>
+                `;
+            } catch (err) {
+                console.error(err);
+                alert("Ошибка при получении данных");
+            }
+        }
+    </script>
+</body>
+</html>
